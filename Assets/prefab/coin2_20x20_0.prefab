@@ -136,4 +136,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b1fb81a729a16a4d9bdaa850ed88f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textoPlacar: {fileID: 0}
+  particulaPrefab: {fileID: 1311180545922611751, guid: 690bf121c026d6a4185d00b6cac1f211,
+    type: 3}

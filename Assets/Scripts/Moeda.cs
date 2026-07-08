@@ -6,18 +6,19 @@ public class Moeda : MonoBehaviour
     public static int pontos = 0;
     private TextMeshProUGUI textoPlacar;
 
+    [Header("Configuração de Partículas")]
+    // 1. ISSO FOI ADICIONADO: Campo para receber o Prefab da sua partícula
+    public GameObject particulaPrefab;
+
     void Start()
     {
-        // Procura na cena pelo objeto exato chamado "Text (TMP)"
         GameObject objetoTexto = GameObject.Find("Text (TMP)");
 
         if (objetoTexto != null)
         {
-            // Pega o componente de texto de dentro dele
             textoPlacar = objetoTexto.GetComponent<TextMeshProUGUI>();
         }
 
-        // Atualiza o texto no início do jogo
         AtualizarTextoInterface();
     }
 
@@ -30,6 +31,12 @@ public class Moeda : MonoBehaviour
             AtualizarTextoInterface();
 
             Debug.Log("Pontos: " + pontos);
+            
+            // 2. ISSO FOI ADICIONADO: Cria a explosão de mini-moedas na posição atual da moeda
+            if (particulaPrefab != null)
+            {
+                Instantiate(particulaPrefab, transform.position, Quaternion.identity);
+            }
             
             Destroy(gameObject);
         }
