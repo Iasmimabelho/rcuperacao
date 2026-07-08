@@ -1587,6 +1587,8 @@ MonoBehaviour:
   controller: {fileID: 820667354}
   animator: {fileID: 820667358}
   runSpeed: 40
+  particulaSaltoPrefab: {fileID: 1824278628924547036, guid: 874d78bc5cae9f143a3b239d5b2d349b,
+    type: 3}
 --- !u!95 &820667358
 Animator:
   serializedVersion: 5

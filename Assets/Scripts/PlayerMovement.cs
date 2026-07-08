@@ -4,52 +4,65 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-	public CharacterController2D controller;
-	public Animator animator;
+    public CharacterController2D controller;
+    public Animator animator;
 
-	public float runSpeed = 40f;
+    public float runSpeed = 40f;
 
-	float horizontalMove = 0f;
-	bool jump = false;
-	bool crouch = false;
+    float horizontalMove = 0f;
+    bool jump = false;
+    bool crouch = false;
 
-	// Update is called once per frame
-	void Update () {
+    [Header("Efeitos Visuais (Professor pediu)")]
+    public GameObject particulaSaltoPrefab; // Arraste o Prefab da poeira para aqui no Unity
 
-		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+    // Update is called once per frame
+    void Update () {
 
-		animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-		if (Input.GetButtonDown("Jump"))
-		{
-			jump = true;
-			animator.SetBool("IsJumping", true);
-		}
+        animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
 
-		if (Input.GetButtonDown("Crouch"))
-		{
-			crouch = true;
-		} else if (Input.GetButtonUp("Crouch"))
-		{
-			crouch = false;
-		}
+        if (Input.GetButtonDown("Jump"))
+        {
+            jump = true;
+            animator.SetBool("IsJumping", true);
 
-	}
+            // CRIA A POEIRA EXATAMENTE AO SALTAR
+            if (particulaSaltoPrefab != null) {
+                Instantiate(particulaSaltoPrefab, transform.position, Quaternion.identity);
+            }
+        }
 
-	public void OnLanding ()
-	{
-		animator.SetBool("IsJumping", false);
-	}
+        if (Input.GetButtonDown("Crouch"))
+        {
+            crouch = true;
+        } else if (Input.GetButtonUp("Crouch"))
+        {
+            crouch = false;
+        }
 
-	public void OnCrouching (bool isCrouching)
-	{
-		animator.SetBool("IsCrouching", isCrouching);
-	}
+    }
 
-	void FixedUpdate ()
-	{
-		// Move our character
-		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
-		jump = false;
-	}
+    public void OnLanding ()
+    {
+        animator.SetBool("IsJumping", false);
+
+        // CRIA A POEIRA TAMBÉM AO ATERRAR (Fica ainda mais profissional!)
+        if (particulaSaltoPrefab != null) {
+            Instantiate(particulaSaltoPrefab, transform.position, Quaternion.identity);
+        }
+    }
+
+    public void OnCrouching (bool isCrouching)
+    {
+        animator.SetBool("IsCrouching", isCrouching);
+    }
+
+    void FixedUpdate ()
+    {
+        // Move our character
+        controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
+        jump = false;
+    }
 }
